@@ -3,5 +3,7 @@
   (:use [clojure.test]))
 
 (deftest simple
-  (is (thrown? UnsupportedOperationException (smtp-send {}))))
+  (is (smtp-send
+        {:to "to@example.com"
+         :from "from@example.com"})))
 

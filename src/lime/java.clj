@@ -1,5 +1,4 @@
-(ns lime.core
-  (:require [clojure.string :as string])
+(ns lime.java
   (:import
     (java.util Date Properties)
     (javax.mail Message Message$RecipientType MessagingException PasswordAuthentication Session Transport)
@@ -9,13 +8,13 @@
   (if-not (and (nil? user) (nil? (pass)))
     (PasswordAuthentication. user pass)))
 
-(defn- make-smtp-message [session message]
+(defn- make-mime-message [session message]
   (doto (MimeMessage. session)
-    (.setFrom (InternetAddress. (:from message)))
+    (.setFrom (InternetAddress. (:user message)))
     (.setRecipients (Message$RecipientType/TO) (InternetAddress/parse (string/join "," (:to message))))
     (.setSendDate (:send-date message (Date.)))
-    (.setSubject (:subject message "(no subject)"))
-    (.setText (:text message ""))))
+    (.setSubject (:subject message))
+    (.setText (:text message))))
 
 (defn- make-properties [message]
   (doto (Properties.)
@@ -28,18 +27,13 @@
     (Session/getDefaultInstance (make-properties message) (make-authenticator message))
     (Session/getDefaultInstance (make-properties message))))
 
-(defn smtp-send
-  "Send a message over SMTP."
-  [message]
-  (try
-    (do
-      (Transport/send (make-smtp-message (make-session message) message)) true)
-  (catch MessagingException e false)))
+(defn encode-message [message]
+  (make-mime-message (make-session message) message))
 
-(defn smtp-send [message callback]
-  (try
-    (Transport/send (make-smtp-message (make-session message) message))
-  (catch Exception e
-    (callback e))
-  (finally
-    (callback nil))))
+
+
+
+
+
+
+
