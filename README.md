@@ -8,8 +8,8 @@ See: [A Better Way to Mail](http://abitofclojure.com/)
 
 ## FAQ
 
-*Q*: Does Lime depend on JavaMail?
-*A*: No. The goal is to build an SMTP client API in Clojure from scratch.
+**Q:** Does Lime depend on JavaMail?
+**A:** No. The goal is to build an SMTP client API in Clojure from scratch.
 
 ## License
 
