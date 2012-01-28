@@ -25,4 +25,4 @@ In progress. Development is currently focusing on the MUA or client-side of the 
 
 ## License
 
-Copyright (c) 2011-2012 Jeremy Heiler and is released under an MIT license.
+Copyright (c) 2011-2012 Jeremy Heiler and is released under an MIT license. See LICENSE.
