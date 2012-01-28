@@ -1,6 +1,8 @@
 # Lime
 
-Lime is a mail library for Clojure. The goal is to provide both the high level functionality and the low level building blocks for the mail-related protocols. Currently, work is going on to fully implement the Mail User Agent aspect (or client-side) of SMTP.
+Lime is a mail library for Clojure. The goal is to make it simple to incorporate mail into your programs. Lime provides the high level functionality you need to accomplish basic mail-related tasks. However, Lime also provides the low-level building blocks for composing high level functionality in terms of the underlying protocols. It allows you to use the protocols at whatever level you need them.
+
+Currently, work is going on to fully implement the Mail User Agent aspect (or client-side) of SMTP.
 
 ## Motivation
 
@@ -10,13 +12,16 @@ Lime is a mail library for Clojure. The goal is to provide both the high level f
 
 [read more](http://abitofclojure.com/)
 
+## Supported Protocols
+
+### SMTP
+
+In progress. Development is currently focusing on the MUA or client-side of the protocol.
+
 ## FAQ
 
 **Q:** Does Lime depend on JavaMail?  
-**A:** No. Lime does not depend on JavaMail, and is meant to replace it within Clojure programs. If you need a JavaMail wrapper, I recommend [Postal](https://github.com/drewr/postal).
-
-**Q:** Why not just use JavaMail?  
-**A:** The purpose of Lime is to be a mail library that makes the protocols accessible in a Clojure environment. You can still do the high level functions, but you can also create your own high level functions with the building blocks Limes provide for any given protocol.
+**A:** No. Lime is meant to replace it within Clojure programs. If you do need a JavaMail wrapper, I recommend [Postal](https://github.com/drewr/postal).
 
 ## License
 
