@@ -2,7 +2,7 @@
 
 Lime is a mail library for Clojure. The goal is to make it simple to incorporate mail into your programs. Lime provides the high level functionality you need to accomplish basic mail-related tasks. However, Lime also provides the low-level building blocks for composing high level functionality in terms of the underlying protocols. It allows you to use the protocols at whatever level you need them.
 
-Currently, work is going on to fully implement the Mail User Agent aspect (or client-side) of SMTP.
+Lime is still being developed and has not been released. See Supported Protocols for current progress.
 
 ## Motivation
 
