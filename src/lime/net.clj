@@ -1,19 +1,21 @@
 (ns lime.net
-  (:require [clojure.java.io :as io])
+  "Provides useful fucntions that wrap Java's networking API. The
+  purpose of these functions is to simplify platform portability."
+  (:require [clojure.java.io :as io :only [reader writer]])
   (:import [java.net Socket]))
 
 (defn open-socket
-  "Opens and returns a client socket."
+  "Opens and returns a socket bound to the given port on the host."
   [host port]
   (Socket. host port))
 
 (defn socket-reader
-  "Wraps the socket's input stream with a BufferedReader."
+  "Returns a buffered reader that wraps the socket's input stream."
   [socket]
   (io/reader (.getInputStream socket)))
 
 (defn socket-writer
-  "Wraps the socket's output stream with a BufferedWriter."
+  "Returns a buffered writer that wraps the socket's output stream."
   [socket]
   (io/writer (.getOutputStream socket)))
 
