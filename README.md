@@ -6,7 +6,7 @@ The development of Lime has just begun, so much of it is still in the planning s
 
 ## Motivation
 
-Here is a snippet from the [Lime blog](http://limemail.org/2012/01/20/a-better-way-to-mail.html) about his motivation to start building Lime:
+Here is a snippet from the [Lime blog](http://limemail.org/2012/01/20/a-better-way-to-mail.html) about the motivation to start building Lime:
 
 > At the time of this writing, Clojure doesn't have any built-in mail libraries. Also, all of the third party mail libraries that I have seen depend on JavaMail. This is fine for anyone who wants to simply send mail using the JVM. The problem is that the JavaMail API was built for Java, which leaves much to be desired in terms of expressiveness and extensibility in a Clojure environment.
 >
