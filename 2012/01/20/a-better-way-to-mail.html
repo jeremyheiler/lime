@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Lime: A mail library for Clojure</title>
+        <link href="http://fonts.googleapis.com/css?family=Asap" rel="stylesheet" type="text/css">
+        <link type="text/css" rel="stylesheet" href="../../../common.css">
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("#head").click(function(){
+                    window.location = "/lime";
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div id="head">
+            <h1>Lime</h1>
+            <h2>A mail library</h2>
+            <h2>for Clojure</h2>
+        </div>
+        <div id="page">
+            <div class="post" id="post1">
+                <div class="head">
+                    <h1>A Better Way to Mail</h1>
+                    <div class="date">Posted on January 20, 2012</div>
+                </div>
+                <p>At the time of this writing, Clojure doesn't have any built-in mail libraries. Also, all of the third party mail libraries that I have seen depend on JavaMail. This is fine for anyone who wants to simply send mail using the JVM. The problem is that the JavaMail API was built for Java, which leaves much to be desired in terms of expressiveness and extensibility in a Clojure environment.</p>
+                <p>I believe there is an opportunity for a better and <a href="http://www.infoq.com/presentations/Simple-Made-Easy">simpler</a> solution to send mail with Clojure. Sending mail whould be as simple as a function call, but it should also be simple to dig into the protocols and use them to their fullest extent. There also is more than just the JVM to consider, and I believe having a common mail library that can easily be ported to other Clojure platforms would be incredibly useful.</p>
+                <p>In order to kick start this endeavor, I have begun implementing an SMTP client called <a href="https://github.com/jeremyheiler/lime">Lime</a>. The short-term goal for this project is to build a low-level API for managing the client-side of an SMTP session. The idea is that you should be able to interact with an SMTP server inside a REPL as if you were using telent to do the same. The next step would then be to run pre-defined mail sessions, and everything else that goes into building a high-level API.</p>
+                <p>This will take time to implement, but the effort will be worth it. I believe the Clojure community will be better off having its own mail libraries, rather than depend on platform support. If you wish to help out, hit up the <a href="https://github.com/jeremyheiler/lime">Lime project page</a> and check back here for progress updates. I plan on attending <a href="http://clojurewest.org">Clojure/West</a> so maybe I will see you there!</p>
+            </div>
+        </div>
+        <div id="foot">
+            <p>&copy; 2012 Jeremy Heiler : <a href="http://twitter.com/limemail">@limemail</a> : FreeNode #limemail</p>
+            <p>Lime Graphic by <a href="http://graphicpeel.com">Graphicpeel</a> (seriously, this guy does great work!)</p>
+        </div>
+        <script type="text/javascript">
+          var _gauges = _gauges || [];
+          (function() {
+            var t   = document.createElement('script');
+            t.type  = 'text/javascript';
+            t.async = true;
+            t.id    = 'gauges-tracker';
+            t.setAttribute('data-site-id', '4f20f514cb25bc3a44000005');
+            t.src = '//secure.gaug.es/track.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(t, s);
+          })();
+        </script>
+    </body>
+</html>

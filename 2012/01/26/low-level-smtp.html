@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Lime: A mail library for Clojure</title>
+        <link href="http://fonts.googleapis.com/css?family=Asap" rel="stylesheet" type="text/css">
+        <link type="text/css" rel="stylesheet" href="../../../common.css">
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("#head").click(function(){
+                    window.location = "/lime";
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div id="head">
+            <h1>Lime</h1>
+            <h2>A mail library</h2>
+            <h2>for Clojure</h2>
+        </div>
+        <div id="page">
+            <div class="post" id="post2">
+                <div class="head">
+                    <h1>Low Level SMTP</h1>
+                    <div class="date">Posted on January 26, 2012</div>
+                </div>
+                <p>Without further ado, I would like to present the first bit of code written for Lime. It's definitely not polished or capable of doing much, but it is <i>something</i>, and I would rather receive feedback on <i>something</i> now rather than later when something importmant may have been overlooked.</p>
+                <p>If you want to follow along, <a href="https://github.com/jeremyheiler/lime">check out the code</a> and run <code>lein repl</code> in the project's root directory. You'll also  want to load the SMTP command functions, which are in their own namespace. If you don't have an SMTP server to play with, install <a href="http://www.exim.org">Exim</a> from your package manager of choice. The initial configuration should be good enough.</p>
+                <div class="codeblock">
+                    lime.smtp=&gt; (use 'lime.smtp.commands)<br>
+                    nil<br>
+                </div>
+                <p>There is a function for each core SMTP command. If the SMTP command requires parameters, you may supply them. For more information on SMTP commands, see Lime's <a href="https://github.com/jeremyheiler/lime/wiki/SMTP-Command-Reference">SMTP Command Reference</a>.</p>
+                <p>Here is an example of the <code>HELO</code> command:</p>
+                <div class="codeblock">
+                    lime.smtp=&gt; (HELO "localhost")<br>
+                    "HELO localhost\r\n"
+                </div>
+                <p>Since there is very little to hold you hand at the moment, the next thing you will need to do is open a socket to an SMTP server. For this example, I will connect to a local instance of Exim with no authentication. (If you know the SMTP commands to log into a non-SSL authenticated server, you of course may use the <code>submit</code> command to enter them.)</p>
+                <p>Lime has a <code>lime.smtp/connect</code> function that creates an SMTP "session" for you:</p>
+                <div class="codeblock">
+                    lime.stmp=&gt; (def session (connect "localhost" 25))<br>
+                    #'lime.smtp/session<br>
+                    lime.smtp=&gt; session<br>
+                    {:host "localhost",<br>
+                    :port 25,<br>
+                    :reader #&lt;BufferedReader java.io.BufferedReader@18c4bc34&gt;,<br>
+                    :writer #&lt;BufferedWriter java.io.BufferedWriter@49198ff2&gt;,<br>
+                    :socket #&lt;Socket Socket[addr=localhost/127.0.0.1,port=25,localport=38672]&gt;,<br>
+                    :initial-reply ("220 localhost.localdomain ESMTP Exim 4.77 Thu, 26 Jan 2012 00:49:20 -0500")}
+                </div>
+                <p>As you can see, a session is a Clojure map that contains a reference to the connected socket. The reader and writer wrap the sockets input and output streams with a <code>BufferedReader</code> and <code>BufferedWriter</code>, respectively. The initial reply from the server is also peeled off and kept in the session. Eventually I plan on breaking apart this information so it is  more useful.</p>
+                <p>The first command we will send is the <code>EHLO</code> command. This will be done by using the <code>lime.smtp/submit</code> function. The <code>submit</code> function does three things:</p>
+                <ol>
+                    <li>It writes the command to the socket.</li>
+                    <li>It reads the reply from the socket</li>
+                    <li>It translates the reply into a sequence of reply lines.</li>
+                </ol>
+                <div class="codeblock">
+                    lime.smtp=&gt; (submit  session (EHLO "localhost"))<br>
+                    ("250-localhost.localdomain Hello localhost [127.0.0.1]" "250-SIZE 52428800" "250-PIPELINING" "250 HELP")
+                </div>
+                <p>Here is an example submitting the <code>NOOP</code> and <code>QUIT</code> commands:</p>
+                <div class="codeblock">
+                    lime.smtp=&gt; (submit session (NOOP))<br>
+                    ("250 OK")<br>
+                    lime.smtp=&gt; (submit session (QUIT))<br>
+                    ("221 localhost.localdomain closing connection")
+                </div>
+                <p>That's all I have to show for now. I would appreciate any feedback you might have. At the moment I want to focus on making this low-level API as robust as possible. The <a href="https://github.com/jeremyheiler/lime/issues">issue tracker</a> is open for bugs and design issues. You may also find me on #clojure and the mailing list. My email address is my first and last name at gmail dot com.</p>
+            </div>
+        </div>
+        <div id="foot">
+            <p>&copy; 2012 Jeremy Heiler : <a href="http://twitter.com/limemail">@limemail</a> : FreeNode #limemail</p>
+            <p>Lime Graphic by <a href="http://graphicpeel.com">Graphicpeel</a> (seriously, this guy does great work!)</p>
+        </div>
+        <script type="text/javascript">
+          var _gauges = _gauges || [];
+          (function() {
+            var t   = document.createElement('script');
+            t.type  = 'text/javascript';
+            t.async = true;
+            t.id    = 'gauges-tracker';
+            t.setAttribute('data-site-id', '4f20f514cb25bc3a44000005');
+            t.src = '//secure.gaug.es/track.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(t, s);
+          })();
+        </script>
+    </body>
+</html>
+

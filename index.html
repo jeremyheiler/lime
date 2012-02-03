@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Lime: A mail library for Clojure</title>
+        <link href="http://fonts.googleapis.com/css?family=Asap" rel="stylesheet" type="text/css">
+        <link type="text/css" rel="stylesheet" href="common.css">
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("#head").click(function(){
+                    window.location = "/lime";
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div id="head">
+            <h1>Lime</h1>
+            <h2>A mail library</h2>
+            <h2>for Clojure</h2>
+        </div>
+        <div id="page">
+            <div id="index">
+                <ul id="menu">
+                    <li><a href="https://github.com/jeremyheiler/lime">Code</a></li>
+                    <li><a href="https://github.com/jeremyheiler/lime/wiki">Wiki</a></li>
+                    <li><a href="http://groups.google.com/group/limemail">Mailing List</a></li>
+                    <li><a href="https://github.com/jeremyheiler/lime/issues">Issues</a></li>
+                </ul>
+                <p>Lime is a mail library for Clojure that provides a modular API that was inspired by <a href="https://github.com/mmcgrana/ring">Ring</a>. By abstracting the mail protocols and providing the basic building blocks to use them, Lime aims to make it simple to incorporate mail into your programs. <a href="https://github.com/jeremyheiler/lime/blob/master/README.md">Read more about Lime.</a></p>
+            </div>
+            <div class="snip">
+                <div class="head">
+                    <h1>Low Level SMTP</h1>
+                    <div class="date">Posted on January 26, 2012</div>
+                </div>
+                <p>Without further ado, I would like to present the first bit of code written for Lime. It's definitely not polished or capable of doing much, but it is <i>something</i>, and I would rather receive feedback on <i>something</i> now rather than later when something importmant may have been overlooked.</p>
+                <p><a href="2012/01/26/low-level-smtp.html">read more</a></p>
+            </div>
+            <div class="snip">
+                <div class="head">
+                    <h1>A Better Way to Mail</h1>
+                    <div class="date">Posted on January 20, 2012</div>
+                </div>
+                <p>At the time of this writing, Clojure doesn't have any built-in mail libraries. Also, all of the third party mail libraries that I have seen depend on JavaMail. This is fine for anyone who wants to simply send mail using the JVM. The problem is that the JavaMail API was built for Java, which leaves much to be desired in terms of expressiveness and extensibility in a Clojure environment.</p>
+                <p><a href="2012/01/20/a-better-way-to-mail.html">read more</a></p>
+            </div>
+            <!--
+            <h3>Older Posts</h3>
+            <ul id="other-posts">
+                <li><a href="#post1">A Better Way to Mail</a> on January 20, 2012</li>
+                <li><a href="#post2">The First Iteration of Lime</a> on January 26, 2012</li>
+            </ul>
+            -->
+        </div>
+        <div id="foot">
+            <p>&copy; 2012 Jeremy Heiler : <a href="http://twitter.com/limemail">@limemail</a> : FreeNode #limemail</p>
+            <p>Lime Graphic by <a href="http://graphicpeel.com">Graphicpeel</a> (seriously, this guy does great work!)</p>
+        </div>
+        <script type="text/javascript">
+          var _gauges = _gauges || [];
+          (function() {
+            var t   = document.createElement('script');
+            t.type  = 'text/javascript';
+            t.async = true;
+            t.id    = 'gauges-tracker';
+            t.setAttribute('data-site-id', '4f20f514cb25bc3a44000005');
+            t.src = '//secure.gaug.es/track.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(t, s);
+          })();
+        </script>
+    </body>
+</html>
+
