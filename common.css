@@ -14,6 +14,7 @@ body{
     -moz-box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
     -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+    border-radius: 4px;
     font-size: .8em;
     overflow: hidden;
 }
@@ -28,14 +29,15 @@ code{
 }
 
 div.codeblock{
-    padding: 4px 8px;
-    margin: 1em 0;
-    background-color: #eee;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    padding: 15px 20px;
+    margin: 1em -20px;
+    line-height: 1.4em;
     text-align: left;
     font-family: monospace;
-    font-size: .8em;
+    font-size: .9em;
+    box-shadow: inset 0 0 5px black;
+    background-color: #222;
+    color: #fff;
 }
 
 #head{
