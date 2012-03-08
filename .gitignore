@@ -1,10 +1,11 @@
-/pom.xml
-*jar
+/target
 /lib
 /classes
-/native
-/.lein-failures
 /checkouts
-/.lein-deps-sum
+pom.xml
+*.jar
+*.class
+.lein-deps-sum
+.lein-failures
+.lein-plugins
 *.swp
-
