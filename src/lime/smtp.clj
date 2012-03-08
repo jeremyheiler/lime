@@ -1,7 +1,36 @@
 (ns lime.smtp
   "Low-level functions for communicating with an SMTP server."
-  (:require [lime.io :as io]
-            [lime.net :as net]))
+  (:require [lime.net :as net])
+  (:require [clojure.java.io :as io :only [reader writer]])
+  (:import [java.io StringReader]))
+
+(defn write
+  "Writes the given strings"
+  [writer & strings]
+  (.write writer (apply str strings)))
+
+(defn write+flush
+  "Writes the given strings and flushes the buffer."
+  [writer & strings]
+  (.write writer (apply str strings))
+  (.flush writer))
+
+(defn string-reader
+  "Wraps the given string in a StringReader."
+  [string]
+  (io/reader (StringReader. string)))
+
+(defn get-line
+  ""
+  [reader]
+  (.readLine reader))
+
+(defn put-line
+  ""
+  [writer line]
+  (.write writer line)
+  (.write writer "\r\n")
+  (.flush writer))
 
 (defn last-line?
   "Returns true if the given line identifies itself as the last line of a reply.
@@ -23,7 +52,7 @@
   "The client needs to ensure the end-of-mail sequence doesn't appear in
   message data while it's being transported."
   [message]
-  (map maybe-prepend-dot (line-seq (io/string-reader message))))
+  (map maybe-prepend-dot (line-seq (string-reader message))))
 
 (defn read-reply
   "Reads an SMTP reply from the reader and returns a sequence containing
@@ -44,50 +73,56 @@
       (recur tail (update-in reply [:text] #(conj % (subs head 4)))))))
 
 (defn send-command
-  "Sends the given command to the server and returns the reply."
-  [session command] ; & {:keys [expect]}]
-  (let [reader (:reader session) writer (:writer session)]
-    (io/write+flush writer command "\r\n")
-    (parse-reply (read-reply reader))))
-
-(defn write-message
-  [writer message]
-  (doseq [line message] (io/write writer line "\r\n"))
-  (io/write+flush writer "\r\n.\r\n"))
+  ""
+  [session command]
+  (put-line (:writer session) command)
+  (parse-reply (read-reply (:reader session))))
 
 (defn send-message
   ""
   [session message]
-  (let [reader (:reader session) writer (:writer session)]
-    (write-message writer (transparentize message))
-    (parse-reply (read-reply reader))))
+  ; split msg by line
+  (doseq [line (transparentize message)]
+    (put-line (:writer session) line))
+  (put-line (:writer session) "\r\n."))
+
+(defn new-session
+  ""
+  [host port socket]
+  (let [reader (net/socket-reader socket)
+        writer (net/socket-writer socket)]
+    {:host host
+     :port port
+     :socket socket
+     :reader reader
+     :writer writer}))
 
 (defn connect
   "Connects to an SMTP server on the given host and port. Returns
   a session map that facilitates interaction with the server."
-  [host port & {:keys [ssl tls]}]
-  (let [socket (cond
-                 ssl (throw (UnsupportedOperationException. "SSL not yet supported."))
-                 tls (throw (UnsupportedOperationException. "TLS not yet supported."))
-                 :else (net/open-socket host port))
-        session {:host host
-                 :port port
-                 :reader (net/socket-reader socket)
-                 :writer (net/socket-writer socket)
-                 :socket socket}]
-    (assoc session :opening-reply (parse-reply (read-reply (:reader session))))))
-    
+  [host port]
+  (new-session host port (net/open-socket host port)))
+;  (let [session (new-session host port (net/open-socket host port))]
+;    (update-in session [:log] #(conj % (parse-reply (read-reply (:channel session)))))))
 
-;(defn submit-all
-;  "Opens a session with the server and sends the sequence of commands one
-;   by one until all commands are processed or an irrecoverable error occurs."
-;  [session commands])
 
-;(defn with-session
-;  ([host port]
-;    (with-session (connect host port)))
-;  ([session]
-;    (doto session
-;      (send-command! (HELO host))
-;      (send-command! (QUIT)))))
+
+;(defn issue
+;  "Issues the arg to the server. It is up to the caller to ensure the arg is
+;  a valid SMTP command or message, and is terminated properly. The reply from
+;  the server is parsed into a map and returned."
+;  [session arg]
+;  (let [{:keys [channel log]} session]
+;    (cond
+;      (string? arg)
+;        (do
+;          (put-line channel arg)
+;          (log arg))
+;      (seq? arg)
+;        (do
+;          (doseq [line arg] (put-line channel line))
+;          (log arg))
+;      :else
+;        (IllegalArgumentException. "arg is not a string or a seq"))
+;    (parse-reply (read-reply channel))))
 

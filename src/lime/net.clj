@@ -7,7 +7,7 @@
 (defn open-socket
   "Opens and returns a socket bound to the given port on the host."
   [host port]
-  (Socket. host port))
+  (^Socket Socket. host port))
 
 (defn socket-reader
   "Returns a buffered reader that wraps the socket's input stream."
