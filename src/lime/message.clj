@@ -33,9 +33,28 @@
     (.append sb (build-header-body (:body h "")))
     (.append sb "\r\n")))
 
+; todo: only break on whitespace
+(defn hard-wrap [text size]
+  (let [out (StringBuilder.) split-text (s/split-lines text)]
+    (loop [line (first split-text) lines (rest split-text)]
+      (let [line-size (count line)]
+        (cond
+          (nil? line)
+            (str out)
+          (< line-size size)
+            (do
+              (.append out line 0 line-size)
+              (.append out "\r\n")
+              (recur (first lines) (rest lines)))
+          :else
+            (do
+              (.append out line 0 size)
+              (.append out "\r\n")
+              (recur (subs line size) lines)))))))
+
 (defn- build-message-body [sb body]
   (.append sb "\r\n")
-  (.append sb body))
+  (.append sb (hard-wrap body 78)))
 
 (defn build-message
   "Build a structured Internet message from a map containing header and body information."
@@ -44,9 +63,6 @@
     (build-message-headers sb (get message-map :headers []))
     (build-message-body sb (get message-map :body ""))
     (.toString sb)))
-
-
-
 
 (defn whitespace?
   "Returns true if the provided character is a space or horizontal tab."
@@ -58,19 +74,24 @@
 
 
 
-;(defn break-line [line len]
-;  (cond
-;    (zero? len) [line]
-;    (whitespace? (str (nth line len))) [(subs line 0 len) (subs line len)]
-;    :else (recur line (dec len))))
 
-;(defn hard-wrap
-;  [text len]
-;  (let [out (StringBuilder.) all (s/split-lines text)]
-;    (loop [[line (first all) lines (rest all)]
-;      (if (> len (count line))
-;        (cond
-;          (whitespace? (nth line len)) (do (.append out line 0 (dec len)) (recur (subs line len) lines))
-;          (whitespace? (nth line (dec len))) (do (.append out line 0 (dec len)) (recur (subs line len) lines))
-;          (
+
+; todo: do some validation?
+(defn from-handler
+  "A message handler that converts the value mapped to the :from key to a From header."
+  [message]
+  (if-let [body (:from message)]
+    (update-in message [:headers] (fn [headers]
+                                    (conj headers
+                                      {:name "From"
+                                       :body (if (coll? body) (s/join ", " body) body)})))
+    message))
+
+
+
+
+
+
+
+
 
