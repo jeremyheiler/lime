@@ -33,4 +33,4 @@ Please report issues in the [issue tracker](https://github.com/jeremyheiler/lime
 
 ## License
 
-Copyright (c) 2011-2012 Jeremy Heiler and is released under an MIT license. See LICENSE.
+Copyright (c) 2011-2012 Jeremy Heiler. Distributed under the Eclipse Public License, the same as Clojure. See COPYING.
