@@ -38,26 +38,6 @@ the motivation to start building Lime:
 >library that can easily be ported to other Clojure platforms would be
 >incredibly useful.
 
-## Supported Protocols
-
-### SMTP
-
-The first protocol Lime will support is client-side SMTP.
-
-### What Next?
-
-What will be the next protocol to implement? It's too early to tell,
-but if you would like to see a protocol supported, [find or open an
-issue](https://github.com/jeremyheiler/lime/issues) to discuss it.
-Pull requests are always encouraged, but if it involves implementing
-an protocol that isn't supported yet, please discuss it first.
-
-## FAQ
-
-**Q:** Does Lime depend on JavaMail? A:** No. Lime is meant to replace
-**it within Clojure programs. If you do need a JavaMail wrapper, I
-**recommend [Postal](https://github.com/drewr/postal).
-
 ## Contributing
 
 Please report issues in the [issue
