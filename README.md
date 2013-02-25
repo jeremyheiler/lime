@@ -15,7 +15,7 @@ That said, Lime is still very young and in development. The focus is
 on client-side SMTP, so keep that in mind when browsing the code. If
 you're looking for a fully featured and production-ready SMTP client
 library, please check out [Postal](https://github.com/drewr/postal).
-It is an excellent wrapper to JavaMail.
+It is an excellent wrapper for JavaMail.
 
 ## Motivation
 
@@ -41,9 +41,9 @@ the motivation to start building Lime:
 ## Contributing
 
 Please report issues in the [issue
-tracker](https://github.com/jeremyheiler/lime/issues). We encourage
-contributions to be made in the form of pull requests, but since we
-are still working to get a 1.0.0 release, please open discussion on
+tracker](https://github.com/jeremyheiler/lime/issues). Contributions
+are encouraged to be made in the form of pull requests, but since we
+are still working to get 1.0.0 released, please start a discussion on
 what you would like to work on. Other then the issue tracker, you may
 join us on the [mailing list](http://groups.google.com/group/limemail)
 or on IRC at #limemail in FreeNode.
