@@ -1,17 +1,20 @@
 (ns lime.smtp.starttls
-  "Support for SMTP over TLS."
   (:require [lime.smtp :as smtp])
   (:import [javax.net.ssl SSLSocketFactory]))
 
-(defn STARTTLS
-  []
-  "STARTTLS")
+(defn ^:private layer-socket
+  [socket host port]
+  (.createSocket (SSLSocketFactory/getDefault) socket host port true))
 
 (defn negotiate-tls
-  "Returns a session with a socket that uses TLS."
-  [session]
-  (smtp/new-session
-    (:host session)
-    (:port session)
-    (.createSocket (SSLSocketFactory/getDefault) (:socket session) (:host session) (:port session) true)))
+  [{:keys [server-host server-port] :as session}]
+  (-> session
+      (update-in [:socket] layer-socket server-host server-port)
+      (smtp/setup-io)))
 
+(defn with-starttls
+  [client]
+  (fn [session]
+    (-> session
+        (update-in [:command-fns] assoc :STARTTLS (constantly "STARTTLS"))
+        (update-in [:reply-fns] assoc :STARTTLS negotiate-tls))))

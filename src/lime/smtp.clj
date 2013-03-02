@@ -20,17 +20,18 @@
   "Reads the reply and returns a sequence of reply lines."
   [session]
   (loop [reply []]
-    (let [line (.readLine (:reader session))]
+    (let [line (.readLine (:reader session)) reply (conj reply line)]
       (if (last-line? line)
-        (seq (conj reply line))
-        (recur (conj reply line))))))
+        (seq reply)
+        (recur reply)))))
 
 (defn parse-reply
   "Parses a sequence of reply lines into a map with :code mapped to
   the reply code, and :text mapped to a vector containing the values
   from each line."
   [reply-seq]
-  (loop [[head & tail] reply-seq reply {:code (Integer/parseInt (subs head 0 3)) :text []}]
+  (loop [[head & tail] reply-seq
+         reply {:code (Integer/parseInt (subs head 0 3)) :text []}]
     (if head
       (update-in reply [:text] conj (subs head 4))
       (recur tail (update-in reply [:text] conj (subs head 4))))))
