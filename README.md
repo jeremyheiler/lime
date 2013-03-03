@@ -1,5 +1,8 @@
 # Lime
 
+> Simple things should be simple, complex things should be possible.
+> --Alan Kay
+
 Lime is a mail library for Clojure. Development is currently focused
 on designing an abstraction for scripting SMTP sessions as a client.
 Future development will include further abstractions on top of SMTP,
