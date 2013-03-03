@@ -69,6 +69,13 @@
     session
     session))
 
+(def apply-hooks
+  [session hooks]
+  (let [[hook & hooks] hooks]
+    (if hook
+      (recur (hook session) hooks)
+      session)))
+
 (defn obtain-command-fn
   [command-key]
   (fn [session]
@@ -83,7 +90,7 @@
   (fn [session]
     (let [command-str (apply command-fn command-args)]
       (send-command session command-str)
-      [command-str session])))
+      [command-str (apply-hooks session (:command-hooks session))])))
 
 ;; TODO log reply in the session
 ;; TODO allow extensions to defer reading the reply
